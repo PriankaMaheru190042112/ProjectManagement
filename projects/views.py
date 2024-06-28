@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Project, Task
 from django.contrib.auth import login
-from .forms import ProjectForm, TaskForm, RegisterForm
+from .forms import ProjectForm, TaskForm, RegisterForm, TaskStatusUpdateForm
 
 def superuser_required(user):
     return user.is_superuser
@@ -22,8 +22,20 @@ def project_detail(request, pk):
 
 @login_required
 def task_detail(request, project_id, task_id):
-    task = get_object_or_404(Task, pk=task_id, project_id=project_id, assigned_to=request.user)
-    return render(request, 'projects/task_detail.html', {'task': task})
+    task = get_object_or_404(Task, pk=task_id, project_id=project_id)
+    
+    if request.user == task.assigned_to or request.user.is_superuser:
+        if request.method == 'POST':
+            form = TaskStatusUpdateForm(request.POST, instance=task)
+            if form.is_valid():
+                form.save()
+                return redirect('task_detail', project_id=project_id, task_id=task_id)
+        else:
+            form = TaskStatusUpdateForm(instance=task)
+    else:
+        form = None
+
+    return render(request, 'projects/task_detail.html', {'task': task, 'form': form})
 
 @login_required
 @user_passes_test(superuser_required)

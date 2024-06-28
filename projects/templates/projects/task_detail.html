@@ -12,6 +12,14 @@
     <p>Not assigned</p>
 {% endif %}
 
+{% if user == task.assigned_to or user.is_superuser %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Status</button>
+    </form>
+{% endif %}
+
 {% if user.is_superuser %}
     <a href="{% url 'task_update' task.project.pk task.pk %}">Edit Task</a>
 {% endif %}
