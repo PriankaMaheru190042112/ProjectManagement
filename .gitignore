@@ -3,6 +3,7 @@
 *.pot
 *.pyc
 __pycache__/
+ProjectManagement/__pycache__/
 projects/__pycache__/
 projects/migrations/
 db.sqlite3
