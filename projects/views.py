@@ -59,3 +59,5 @@ def task_update(request, project_pk, pk):
     else:
         form = TaskForm(instance=task)
     return render(request, 'projects/task_form.html', {'form': form, 'project': project, 'task': task})
+
+
