@@ -11,5 +11,9 @@
 {% else %}
     <p>Not assigned</p>
 {% endif %}
-<a href="{% url 'task_update' task.project.pk task.pk %}">Edit Task</a>
+
+{% if user.is_superuser %}
+    <a href="{% url 'task_update' task.project.pk task.pk %}">Edit Task</a>
+{% endif %}
+
 {% endblock %}

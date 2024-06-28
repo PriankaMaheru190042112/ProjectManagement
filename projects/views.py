@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Project, Task
 from django.contrib.auth import login
 from .forms import ProjectForm, TaskForm, RegisterForm
+
+def superuser_required(user):
+    return user.is_superuser
 
 @login_required
 def project_list(request):
@@ -23,6 +26,7 @@ def task_detail(request, project_id, task_id):
     return render(request, 'projects/task_detail.html', {'task': task})
 
 @login_required
+@user_passes_test(superuser_required)
 def project_create(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -36,6 +40,7 @@ def project_create(request):
     return render(request, 'projects/project_form.html', {'form': form})
 
 @login_required
+@user_passes_test(superuser_required)
 def task_create(request, project_pk):
     project = get_object_or_404(Project, pk=project_pk)
     if request.user not in project.members.all():
@@ -52,6 +57,7 @@ def task_create(request, project_pk):
     return render(request, 'projects/task_form.html', {'form': form, 'project': project})
 
 @login_required
+@user_passes_test(superuser_required)
 def task_update(request, project_pk, pk):
     project = get_object_or_404(Project, pk=project_pk)
     task = get_object_or_404(Task, pk=pk)

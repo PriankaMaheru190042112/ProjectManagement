@@ -4,7 +4,9 @@
 
 {% block content %}
 <h1>Projects</h1>
-<a href="{% url 'project_create' %}">Create Project</a>
+{% if user.is_superuser %}
+    <a href="{% url 'project_create' %}">Create Project</a>
+{% endif %}
 <ul>
     {% for project in projects %}
         <li><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></li>
