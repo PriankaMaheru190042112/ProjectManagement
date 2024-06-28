@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Project, Task
-from .forms import ProjectForm, TaskForm
+from django.contrib.auth import login
+from .forms import ProjectForm, TaskForm, RegisterForm
 
 @login_required
 def project_list(request):
@@ -61,3 +62,13 @@ def task_update(request, project_pk, pk):
     return render(request, 'projects/task_form.html', {'form': form, 'project': project, 'task': task})
 
 
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('project_list')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
