@@ -9,7 +9,7 @@
 <a href="{% url 'task_create' project.pk %}">Add Task</a>
 <ul>
     {% for task in tasks %}
-        <li>{{ task.name }} - {{ task.status }} - <a href="{% url 'task_update' project.pk task.pk %}">Edit</a></li>
+        <li>{{ task.name }} - {{ task.status }} - <a href="{% url 'task_detail' project.pk task.pk %}">View</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

@@ -14,8 +14,13 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.user not in project.members.all():
         return redirect('project_list')
-    tasks = project.tasks.all()
+    tasks = Task.objects.filter(project=project, assigned_to=request.user)
     return render(request, 'projects/project_detail.html', {'project': project, 'tasks': tasks})
+
+@login_required
+def task_detail(request, project_id, task_id):
+    task = get_object_or_404(Task, pk=task_id, project_id=project_id, assigned_to=request.user)
+    return render(request, 'projects/task_detail.html', {'task': task})
 
 @login_required
 def project_create(request):
