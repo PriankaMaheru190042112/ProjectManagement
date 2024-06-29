@@ -19,3 +19,8 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+class TaskStatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['status']

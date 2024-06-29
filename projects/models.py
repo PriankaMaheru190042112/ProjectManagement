@@ -15,6 +15,7 @@ class Task(models.Model):
     description = models.TextField()
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
     status = models.CharField(max_length=20, choices=[('Todo', 'Todo'), ('In Progress', 'In Progress'), ('Done', 'Done')], default='Todo')
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     due_date = models.DateField(null=True, blank=True)
 
     def __str__(self):

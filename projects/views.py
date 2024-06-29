@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Project, Task
 from django.contrib.auth import login
-from .forms import ProjectForm, TaskForm, RegisterForm
+from .forms import ProjectForm, TaskForm, RegisterForm, TaskStatusUpdateForm
+
+def superuser_required(user):
+    return user.is_superuser
 
 @login_required
 def project_list(request):
@@ -14,10 +17,28 @@ def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.user not in project.members.all():
         return redirect('project_list')
-    tasks = project.tasks.all()
+    tasks = Task.objects.filter(project=project, assigned_to=request.user)
     return render(request, 'projects/project_detail.html', {'project': project, 'tasks': tasks})
 
 @login_required
+def task_detail(request, project_id, task_id):
+    task = get_object_or_404(Task, pk=task_id, project_id=project_id)
+    
+    if request.user == task.assigned_to or request.user.is_superuser:
+        if request.method == 'POST':
+            form = TaskStatusUpdateForm(request.POST, instance=task)
+            if form.is_valid():
+                form.save()
+                return redirect('task_detail', project_id=project_id, task_id=task_id)
+        else:
+            form = TaskStatusUpdateForm(instance=task)
+    else:
+        form = None
+
+    return render(request, 'projects/task_detail.html', {'task': task, 'form': form})
+
+@login_required
+@user_passes_test(superuser_required)
 def project_create(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -31,6 +52,7 @@ def project_create(request):
     return render(request, 'projects/project_form.html', {'form': form})
 
 @login_required
+@user_passes_test(superuser_required)
 def task_create(request, project_pk):
     project = get_object_or_404(Project, pk=project_pk)
     if request.user not in project.members.all():
@@ -47,6 +69,7 @@ def task_create(request, project_pk):
     return render(request, 'projects/task_form.html', {'form': form, 'project': project})
 
 @login_required
+@user_passes_test(superuser_required)
 def task_update(request, project_pk, pk):
     project = get_object_or_404(Project, pk=project_pk)
     task = get_object_or_404(Task, pk=pk)

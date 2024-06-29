@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ task.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ task.name }}</h1>
+<p>{{ task.description }}</p>
+<p>Status: {{ task.status }}</p>
+{% if task.assigned_to %}
+    <p>Assigned to: {{ task.assigned_to.username }}</p>
+{% else %}
+    <p>Not assigned</p>
+{% endif %}
+
+<a href="{% url 'project_detail' task.project.pk %}" class="back-button">Back to Task Listing</a>
+
+<div class="button-group">
+    {% if user == task.assigned_to or user.is_superuser %}
+        <form method="post" class="update-status-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="update-status-button">Update Status</button>
+            {% if user.is_superuser %}
+                <a href="{% url 'task_update' task.project.pk task.pk %}" class="edit-button">Edit Task</a>
+            {% endif %}
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}

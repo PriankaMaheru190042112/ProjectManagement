@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Projects</title>
-</head>
-<body>
-    <h1>Projects</h1>
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<h1>Projects</h1>
+{% if user.is_superuser %}
     <a href="{% url 'project_create' %}">Create Project</a>
-    <ul>
-        {% for project in projects %}
-            <li><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% endif %}
+<ul>
+    {% for project in projects %}
+        <li><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
