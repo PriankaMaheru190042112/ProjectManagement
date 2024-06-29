@@ -10,9 +10,13 @@
     <a href="{% url 'task_create' project.pk %}">Add Task</a>
 {% endif %}
 <ul>
-    {% for task in tasks %}
-        <li>{{ task.name }} - {{ task.status }} - <a href="{% url 'task_detail' project.pk task.pk %}">View</a></li>
-    {% endfor %}
+    {% if tasks %}
+        {% for task in tasks %}
+            <li>{{ task.name }} - {{ task.status }} - <a href="{% url 'task_detail' project.pk task.pk %}">View</a></li>
+        {% endfor %}
+    {% else %}
+        <li>Not Assigned to any Tasks</li>
+    {% endif %}
 </ul>
 <a href="{% url 'project_list' %}" class="btn btn-primary">Back to Project List</a>
 {% endblock %}

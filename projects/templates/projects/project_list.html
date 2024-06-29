@@ -8,8 +8,12 @@
     <a href="{% url 'project_create' %}">Create Project</a>
 {% endif %}
 <ul>
-    {% for project in projects %}
-        <li><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></li>
-    {% endfor %}
+    {% if projects %}
+        {% for project in projects %}
+            <li><a href="{% url 'project_detail' project.pk %}">{{ project.name }}</a></li>
+        {% endfor %}
+    {% else %}
+        <li>Not Assigned to any Projects</li>
+    {% endif %}
 </ul>
 {% endblock %}
