@@ -79,12 +79,12 @@ def task_update(request, project_pk, pk):
     if request.user not in project.assigned_users.all():
         return redirect('project_list')
     if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task)
+        form = TaskForm(project=project, data=request.POST, instance=task)
         if form.is_valid():
             form.save()
             return redirect('project_detail', pk=project_pk)
     else:
-        form = TaskForm(instance=task)
+        form = TaskForm(project=project, instance=task)
     return render(request, 'projects/task_form.html', {'form': form, 'project': project, 'task': task})
 
 
