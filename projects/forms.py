@@ -4,9 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class ProjectForm(forms.ModelForm):
+    assigned_users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.SelectMultiple,
+        required=True,
+        label="Assign Users"
+    )
     class Meta:
         model = Project
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'assigned_users']
 
 class TaskForm(forms.ModelForm):
     class Meta:
