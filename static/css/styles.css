@@ -205,3 +205,13 @@ footer {
 .pmt-head:hover {
     text-decoration: none;
 }
+
+.instruction {
+    font-size: 0.9em;
+    text-align: center;
+    color: #7d7d7d;
+}
+.project-form {
+    max-width: 600px;
+    margin: auto;
+}

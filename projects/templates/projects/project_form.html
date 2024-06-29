@@ -4,9 +4,10 @@
 
 {% block content %}
 <h1>Create Project</h1>
-<form method="post">
+<form method="post" class="project-form">
     {% csrf_token %}
     {{ form.as_p }}
+    <p class="instruction">**Hold CTRL and click on Users for multiselection**</p>
     <button type="submit">Save</button>
 </form>
 {% endblock %}
