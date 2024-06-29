@@ -14,4 +14,5 @@
         <li>{{ task.name }} - {{ task.status }} - <a href="{% url 'task_detail' project.pk task.pk %}">View</a></li>
     {% endfor %}
 </ul>
+<a href="{% url 'project_list' %}" class="btn btn-primary">Back to Project List</a>
 {% endblock %}

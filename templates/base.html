@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <h1>Project Management Tool</h1>
+        <h1><a class="pmt-head" href="{% url 'project_list' %}">PROJECT MANAGEMENT TOOL</a></h1>
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'logout' %}" class="logout-form">
                 {% csrf_token %}
