@@ -12,13 +12,14 @@
     <p>Not assigned</p>
 {% endif %}
 
-<a href="{% url 'project_detail' task.project.pk %}" class="back-button">Back to Task Listing</a>
+
 
 <div class="button-group">
     {% if user == task.assigned_to or user.is_superuser %}
         <form method="post" class="update-status-form">
             {% csrf_token %}
             {{ form.as_p }}
+            <a href="{% url 'project_detail' task.project.pk %}" class="edit-button">Back to Task Listing</a>
             <button type="submit" class="update-status-button">Update Status</button>
             {% if user.is_superuser %}
                 <a href="{% url 'task_update' task.project.pk task.pk %}" class="edit-button">Edit Task</a>
