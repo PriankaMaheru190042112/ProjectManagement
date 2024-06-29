@@ -59,7 +59,7 @@ A collaborative project management tool built with Django.
 
 ## Usage
 
-- Navigate to the Projects page to view and create projects.
+- Navigate to the Projects page to view and create projects.[Only superusers can create projects and tasks however admin can create special groups of users with different layers of restrictions]
 - Assign tasks to team members and track progress.
 - Use the admin interface at `http://127.0.0.1:8000/admin/` for advanced management.
 
