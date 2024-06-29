@@ -55,17 +55,20 @@ def project_create(request):
 @user_passes_test(superuser_required)
 def task_create(request, project_pk):
     project = get_object_or_404(Project, pk=project_pk)
+    
     if request.user not in project.assigned_users.all():
-        return redirect('project_list')
+        return redirect('project_list')  # Redirect if user is not a member of the project
+    
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, project=project)  # Pass project instance to form
         if form.is_valid():
             task = form.save(commit=False)
             task.project = project
             task.save()
             return redirect('project_detail', pk=project_pk)
     else:
-        form = TaskForm()
+        form = TaskForm(project=project)  # Pass project instance to form
+        
     return render(request, 'projects/task_form.html', {'form': form, 'project': project})
 
 @login_required

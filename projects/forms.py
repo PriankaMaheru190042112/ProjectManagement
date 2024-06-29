@@ -15,6 +15,13 @@ class ProjectForm(forms.ModelForm):
         fields = ['name', 'description', 'assigned_users']
 
 class TaskForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        project = kwargs.pop('project', None)  # Get project from kwargs
+        super(TaskForm, self).__init__(*args, **kwargs)
+        
+        if project:
+            self.fields['assigned_to'].queryset = project.assigned_users.all()
+
     class Meta:
         model = Task
         fields = ['name', 'description', 'assigned_to', 'status', 'due_date']
