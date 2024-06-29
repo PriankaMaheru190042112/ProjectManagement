@@ -22,6 +22,13 @@ class TaskForm(forms.ModelForm):
         if project:
             self.fields['assigned_to'].queryset = project.assigned_users.all()
 
+    due_date = forms.DateField(
+        label="Due Date",
+        required=True,
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+        input_formats=["%Y-%m-%d"]
+    )
+
     class Meta:
         model = Task
         fields = ['name', 'description', 'assigned_to', 'status', 'due_date']
