@@ -64,4 +64,4 @@ A collaborative project management tool built with Django.
 - Use the admin interface at `http://127.0.0.1:8000/admin/` for advanced management.
 
 ## User Manual
-[user manual]https://github.com/PriankaMaheru190042112/ProjectManagement/blob/main/User%20Manual.pdf
+https://github.com/PriankaMaheru190042112/ProjectManagement/blob/main/User%20Manual.pdf
