@@ -63,3 +63,7 @@ A collaborative project management tool built with Django.
 - Assign tasks to team members and track progress.
 - Use the admin interface at `http://127.0.0.1:8000/admin/` for advanced management.
 
+
+## Screenshots
+# Admin Home
+![Admin home]([https://via.placeholder.com/468x300?text=App+Screenshot+Here](https://github.com/PriankaMaheru190042112/ProjectManagement/blob/main/screenshots/Screenshot%202024-06-30%20145534.png))
