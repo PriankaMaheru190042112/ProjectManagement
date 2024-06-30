@@ -24,6 +24,7 @@ header h1 {
 
 .logout-form {
     margin: 0;
+    margin-left: 20px;
 }
 
 nav ul {
@@ -200,6 +201,7 @@ footer {
 
 .pmt-head {
     color: #fff;
+    margin-left: 200px;
 }
 
 .pmt-head:hover {
